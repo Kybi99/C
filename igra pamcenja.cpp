@@ -120,8 +120,9 @@ int main(){
 		odgovor=getchar();
 		odgovor=toupper(odgovor);
 		if(odgovor=='Y'){
+			poeni1=0;
+			poeni2=0;
 			sistem();
-			stampa(arr2);
 		}
 		else{
 			cout<<"Igra se zavrsava"<<endl;
@@ -417,15 +418,15 @@ int igra1(struct karakteri *arr2,struct promesani *arr,int poeni1,int poeni2,cha
 			srand(time(0));
 			if(tezina=='H'){
 				strcpy(kompjuter,"hard");
-				random=rand()%6;																						//33% za gresku
+				random=rand()%12;																						//17% za gresku
 			}
 			else if(tezina=='M'){
 				strcpy(kompjuter,"medium");
-				random=rand()%4;																						//50% za gresku
+				random=rand()%6;																						//33% za gresku
 			}
 			else if(tezina=='E'){
 				strcpy(kompjuter,"easy");
-				random=rand()%3;																						//66% za gresku
+				random=rand()%4;																						//50% za gresku
 			}
 			//cout<<random;
 			if(pogodak1!='\0' || pogodak2!='\0' && pogodak1!=pogodak2){
@@ -485,7 +486,22 @@ int igra1(struct karakteri *arr2,struct promesani *arr,int poeni1,int poeni2,cha
 					}
 				}
 			}
-			else{
+			else{	
+				for(j=0;j<15;j++){																						//provera da li su sva polja prazna
+					if(arr2[j].c2=='\0'){
+						brojac++;
+					}
+					else
+						brojac=0;
+
+					if(brojac==16){																						//ispisuje poene u datoteku ukoliko je kraj igre
+					strcpy(pobednik,dodela2(poeni1,poeni2,pobednik));
+					f1<<pobednik<<"Broj igraca je "<<broj_igraca<<"                             "<<"\n"<<poeni1<<" "<<poeni2<<endl;	
+					f1.close();
+					return 0;
+					}
+				}
+
 				cout<<"Kompjuter tezine ("<<kompjuter<<") je na potezu"<<endl;
 				srand(time(0)); 
 				do{
@@ -573,21 +589,6 @@ int igra1(struct karakteri *arr2,struct promesani *arr,int poeni1,int poeni2,cha
 					arr2[random2].c2=(char)x;
 					sistem();
 					stampa(arr2);
-				}
-			
-				for(j=0;j<15;j++){																						//provera da li su sva polja prazna
-					if(arr2[j].c2=='\0'){
-						brojac++;
-					}
-					else
-						brojac=0;
-
-					if(brojac==16){																						//ispisuje poene u datoteku ukoliko je kraj igre
-					strcpy(pobednik,dodela2(poeni1,poeni2,pobednik));
-					f1<<pobednik<<"Broj igraca je "<<broj_igraca<<"                             "<<"\n"<<poeni1<<" "<<poeni2<<endl;	
-					f1.close();
-					return 0;
-					}
 				}
 			}
 		}
